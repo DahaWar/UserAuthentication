@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 100px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #343a40;
+        }
+        .btn {
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        #log {
+            margin-top: 20px;
+            text-align: left;
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>User Authentication</h1>
+    <a href="{{ url_for('start_test') }}" class="btn" onclick="startTest()">Start Test</a>
+    <div id="log"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    function startTest() {
+        const log = document.getElementById('log');
+        log.innerHTML = '';  // Clear previous log
+
+        socket.on('log_message', function(message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            log.appendChild(p);
+            log.scrollTop = log.scrollHeight;  // Scroll to the bottom
+        });
+    }
+</script>
+</body>
+</html>
